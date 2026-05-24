@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}{{ experience.title_es }} | Inside Bridge{% endblock %}
+
+{% block content %}
+<article class="row g-4">
+  <div class="col-lg-7">
+    {% if experience.image_url %}
+      <img src="{{ experience.image_url }}" class="detail-image mb-4" alt="{{ experience.title_es }}">
+    {% endif %}
+    <span class="badge text-bg-primary mb-3">{{ experience.category }}</span>
+    <h1 class="h2">{{ experience.title_es }}</h1>
+    <p class="lead text-secondary">{{ experience.description_es }}</p>
+
+    <section class="mt-4">
+      <h2 class="h5">English</h2>
+      <h3 class="h6">{{ experience.title_en }}</h3>
+      <p class="text-secondary">{{ experience.description_en }}</p>
+    </section>
+  </div>
+  <aside class="col-lg-5">
+    <div class="card sticky-lg-top detail-panel">
+      <div class="card-body">
+        <h2 class="h5">{{ experience.business.business_name }}</h2>
+        <p class="text-secondary">{{ experience.business.description }}</p>
+        <dl class="row mb-0">
+          <dt class="col-5">Precio</dt>
+          <dd class="col-7">{{ experience.display_price }}</dd>
+          <dt class="col-5">Duracion</dt>
+          <dd class="col-7">{{ experience.duration or "Por confirmar" }}</dd>
+          <dt class="col-5">Zona</dt>
+          <dd class="col-7">{{ experience.address_area }}</dd>
+          <dt class="col-5">Idiomas</dt>
+          <dd class="col-7">{{ experience.language_list|join(", ") }}</dd>
+        </dl>
+        <div class="d-grid gap-2 mt-4">
+          {% if experience.contact_whatsapp or experience.business.whatsapp %}
+            <a class="btn btn-success" href="https://wa.me/{{ (experience.contact_whatsapp or experience.business.whatsapp)|replace('+', '')|replace(' ', '') }}" target="_blank" rel="noopener">Contactar por WhatsApp</a>
+          {% endif %}
+          {% if experience.contact_email or experience.business.contact_email %}
+            <a class="btn btn-outline-primary" href="mailto:{{ experience.contact_email or experience.business.contact_email }}">Enviar correo</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </aside>
+</article>
+{% endblock %}

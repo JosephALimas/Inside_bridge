@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Moderacion | Inside Bridge{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h1 class="h3 mb-1">Moderacion de experiencias</h1>
+    <p class="text-secondary mb-0">Aprueba solo experiencias listas para aparecer en el catalogo publico.</p>
+  </div>
+</div>
+
+<h2 class="h5 mb-3">Pendientes</h2>
+{% if pending %}
+  <div class="row g-3 mb-5">
+    {% for experience in pending %}
+      <div class="col-lg-6">
+        <article class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between gap-2">
+              <h3 class="h5">{{ experience.title_es }}</h3>
+              <span class="badge text-bg-warning align-self-start">Pendiente</span>
+            </div>
+            <p class="text-secondary">{{ experience.description_es }}</p>
+            <p class="small text-secondary mb-3">{{ experience.business.business_name }} · {{ experience.category }} · {{ experience.display_price }}</p>
+            <div class="d-flex gap-2">
+              <form method="post" action="{{ url_for('admin.approve_experience', experience_id=experience.id) }}">
+                <button class="btn btn-success btn-sm" type="submit">Aprobar</button>
+              </form>
+              <form method="post" action="{{ url_for('admin.reject_experience', experience_id=experience.id) }}">
+                <button class="btn btn-outline-danger btn-sm" type="submit">Rechazar</button>
+              </form>
+            </div>
+          </div>
+        </article>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="empty-state p-4 text-center mb-5">
+    <p class="mb-0 text-secondary">No hay experiencias pendientes.</p>
+  </div>
+{% endif %}
+
+<h2 class="h5 mb-3">Revisadas</h2>
+{% if reviewed %}
+  <div class="table-responsive">
+    <table class="table align-middle bg-white">
+      <thead>
+        <tr>
+          <th>Titulo</th>
+          <th>Negocio</th>
+          <th>Categoria</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for experience in reviewed %}
+          <tr>
+            <td>{{ experience.title_es }}</td>
+            <td>{{ experience.business.business_name }}</td>
+            <td>{{ experience.category }}</td>
+            <td>
+              {% if experience.status == "approved" %}
+                <span class="badge text-bg-success">Aprobada</span>
+              {% else %}
+                <span class="badge text-bg-danger">Rechazada</span>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% else %}
+  <p class="text-secondary">Aun no hay experiencias revisadas.</p>
+{% endif %}
+{% endblock %}

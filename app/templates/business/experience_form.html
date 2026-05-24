@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% set is_edit = experience is not none and experience.id %}
+{% block title %}{% if is_edit %}Editar experiencia{% else %}Nueva experiencia{% endif %} | Inside Bridge{% endblock %}
+
+{% block content %}
+<div class="form-shell">
+  <h1 class="h3 mb-3">{% if is_edit %}Editar experiencia{% else %}Nueva experiencia{% endif %}</h1>
+  <form method="post" class="card">
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label" for="title_es">Titulo en espanol</label>
+          <input class="form-control" id="title_es" name="title_es" value="{{ experience.title_es if experience else '' }}" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label" for="title_en">Titulo en ingles</label>
+          <input class="form-control" id="title_en" name="title_en" value="{{ experience.title_en if experience else '' }}" required>
+        </div>
+      </div>
+      <div class="row g-3 mt-1">
+        <div class="col-md-6">
+          <label class="form-label" for="description_es">Descripcion en espanol</label>
+          <textarea class="form-control" id="description_es" name="description_es" rows="5" required>{{ experience.description_es if experience else '' }}</textarea>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label" for="description_en">Descripcion en ingles</label>
+          <textarea class="form-control" id="description_en" name="description_en" rows="5" required>{{ experience.description_en if experience else '' }}</textarea>
+        </div>
+      </div>
+      <div class="row g-3 mt-1">
+        <div class="col-md-4">
+          <label class="form-label" for="category">Categoria</label>
+          <select class="form-select" id="category" name="category" required>
+            <option value="">Selecciona</option>
+            {% for category in categories %}
+              <option value="{{ category }}" {% if experience and experience.category == category %}selected{% endif %}>{{ category }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label" for="price_amount">Precio estimado MXN</label>
+          <input class="form-control" id="price_amount" name="price_amount" type="number" min="0" step="1" value="{{ experience.price_amount if experience and experience.price_amount is not none else '' }}">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label" for="duration">Duracion</label>
+          <input class="form-control" id="duration" name="duration" value="{{ experience.duration if experience else '' }}" placeholder="2 horas">
+        </div>
+      </div>
+      <div class="row g-3 mt-1">
+        <div class="col-md-6">
+          <label class="form-label" for="city">Ciudad</label>
+          <input class="form-control" id="city" name="city" value="{{ experience.city if experience else 'Ciudad de Mexico' }}" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label" for="address_area">Zona o punto de encuentro</label>
+          <input class="form-control" id="address_area" name="address_area" value="{{ experience.address_area if experience else '' }}" required>
+        </div>
+      </div>
+      <div class="mt-3">
+        <label class="form-label">Idiomas disponibles</label>
+        {% set current_languages = experience.language_list if experience else ['es', 'en'] %}
+        <div class="d-flex gap-3">
+          <div class="form-check">
+            <input class="form-check-input" id="language_es" name="languages" type="checkbox" value="es" {% if 'es' in current_languages %}checked{% endif %}>
+            <label class="form-check-label" for="language_es">Espanol</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" id="language_en" name="languages" type="checkbox" value="en" {% if 'en' in current_languages %}checked{% endif %}>
+            <label class="form-check-label" for="language_en">English</label>
+          </div>
+        </div>
+      </div>
+      <div class="row g-3 mt-1">
+        <div class="col-md-4">
+          <label class="form-label" for="contact_whatsapp">WhatsApp</label>
+          <input class="form-control" id="contact_whatsapp" name="contact_whatsapp" value="{{ experience.contact_whatsapp if experience else '' }}">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label" for="contact_email">Email</label>
+          <input class="form-control" id="contact_email" name="contact_email" type="email" value="{{ experience.contact_email if experience else '' }}">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label" for="image_url">URL de imagen</label>
+          <input class="form-control" id="image_url" name="image_url" type="url" value="{{ experience.image_url if experience else '' }}">
+        </div>
+      </div>
+      <div class="d-flex justify-content-end gap-2 mt-4">
+        <a class="btn btn-outline-secondary" href="{{ url_for('business.dashboard') }}">Cancelar</a>
+        <button class="btn btn-primary" type="submit">Enviar a revision</button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

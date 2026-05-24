@@ -5,28 +5,28 @@
 {% block content %}
 <section class="row align-items-center g-4 py-5">
   <div class="col-lg-7">
-    <p class="text-primary fw-semibold mb-2">Flask modular para equipos</p>
-    <h1 class="display-5 fw-bold">Una base limpia para construir aplicaciones server-side rendered.</h1>
+    <p class="text-primary fw-semibold mb-2">Turismo local para eventos globales</p>
+    <h1 class="display-5 fw-bold">Descubre experiencias autenticas en Ciudad de Mexico.</h1>
     <p class="lead text-secondary mt-3">
-      Autenticacion, roles, modelos persistentes, blueprints, plantillas Jinja2 y pruebas listas para crecer con el proyecto.
+      Inside Bridge conecta visitantes con negocios locales, experiencias culturales y planes curados durante eventos como el Mundial 2026.
     </p>
     <div class="d-flex gap-2 mt-4">
       {% if current_user.is_authenticated %}
-        <a class="btn btn-primary btn-lg" href="{{ url_for('main.dashboard') }}">Ir al dashboard</a>
+        <a class="btn btn-primary btn-lg" href="{{ url_for('main.dashboard') }}">Ir a mi espacio</a>
       {% else %}
-        <a class="btn btn-primary btn-lg" href="{{ url_for('auth.register') }}">Crear cuenta</a>
-        <a class="btn btn-outline-secondary btn-lg" href="{{ url_for('auth.login') }}">Entrar</a>
+        <a class="btn btn-primary btn-lg" href="{{ url_for('experiences.index') }}">Explorar experiencias</a>
+        <a class="btn btn-outline-secondary btn-lg" href="{{ url_for('auth.register') }}">Publicar negocio</a>
       {% endif %}
     </div>
   </div>
   <div class="col-lg-5">
     <div class="feature-panel p-4">
-      <h2 class="h5">Arquitectura incluida</h2>
+      <h2 class="h5">MVP disponible</h2>
       <ul class="list-unstyled mb-0 mt-3">
-        <li>Blueprints separados por dominio</li>
-        <li>App factory con configuracion por ambiente</li>
-        <li>SQLAlchemy y Flask-Login centralizados</li>
-        <li>Docker, pytest y documentacion inicial</li>
+        <li>Catalogo curado de experiencias aprobadas</li>
+        <li>Registro para turistas y negocios locales</li>
+        <li>Panel para publicar experiencias</li>
+        <li>Moderacion administrativa antes de aparecer publicamente</li>
       </ul>
     </div>
   </div>

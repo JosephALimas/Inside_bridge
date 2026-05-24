@@ -16,11 +16,17 @@ def create_app(config_name=None):
     db.init_app(app)
     login_manager.init_app(app)
 
+    from app.admin import admin_bp
     from app.auth import auth_bp
+    from app.business import business_bp
+    from app.experiences import experiences_bp
     from app.main import main_bp
 
     app.register_blueprint(main_bp)
     app.register_blueprint(auth_bp, url_prefix="/auth")
+    app.register_blueprint(experiences_bp, url_prefix="/experiences")
+    app.register_blueprint(business_bp, url_prefix="/business")
+    app.register_blueprint(admin_bp, url_prefix="/admin")
 
     register_cli(app)
     return app

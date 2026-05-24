@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Mi negocio | Inside Bridge{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column flex-md-row justify-content-between gap-3 align-items-md-center mb-4">
+  <div>
+    <h1 class="h3 mb-1">Mi negocio</h1>
+    <p class="text-secondary mb-0">Administra tu perfil y tus experiencias para visitantes.</p>
+  </div>
+  <div class="d-flex gap-2">
+    <a class="btn btn-outline-secondary" href="{{ url_for('business.profile') }}">Perfil</a>
+    <a class="btn btn-primary" href="{{ url_for('business.new_experience') }}">Nueva experiencia</a>
+  </div>
+</div>
+
+{% if not business %}
+  <div class="alert alert-warning">
+    Completa tu perfil de negocio antes de publicar experiencias.
+  </div>
+{% else %}
+  <section class="card mb-4">
+    <div class="card-body">
+      <h2 class="h5">{{ business.business_name }}</h2>
+      <p class="text-secondary mb-2">{{ business.description }}</p>
+      <p class="mb-0 small text-secondary">{{ business.city }} · {{ business.address_area }}</p>
+    </div>
+  </section>
+{% endif %}
+
+<h2 class="h5 mb-3">Experiencias publicadas</h2>
+{% if experiences %}
+  <div class="table-responsive">
+    <table class="table align-middle bg-white">
+      <thead>
+        <tr>
+          <th>Titulo</th>
+          <th>Categoria</th>
+          <th>Precio</th>
+          <th>Estado</th>
+          <th class="text-end">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for experience in experiences %}
+          <tr>
+            <td>{{ experience.title_es }}</td>
+            <td>{{ experience.category }}</td>
+            <td>{{ experience.display_price }}</td>
+            <td>
+              {% if experience.status == "approved" %}
+                <span class="badge text-bg-success">Aprobada</span>
+              {% elif experience.status == "rejected" %}
+                <span class="badge text-bg-danger">Rechazada</span>
+              {% else %}
+                <span class="badge text-bg-warning">Pendiente</span>
+              {% endif %}
+            </td>
+            <td class="text-end">
+              <a class="btn btn-sm btn-outline-primary" href="{{ url_for('business.edit_experience', experience_id=experience.id) }}">Editar</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% else %}
+  <div class="empty-state p-4 text-center">
+    <p class="mb-0 text-secondary">Aun no has creado experiencias.</p>
+  </div>
+{% endif %}
+{% endblock %}

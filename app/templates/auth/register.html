@@ -19,6 +19,13 @@
         <label for="password" class="form-label">Contrasena</label>
         <input class="form-control" id="password" name="password" type="password" autocomplete="new-password" required>
       </div>
+      <div class="mb-3">
+        <label for="role" class="form-label">Tipo de cuenta</label>
+        <select class="form-select" id="role" name="role" required>
+          <option value="tourist">Turista o visitante</option>
+          <option value="business">Negocio local</option>
+        </select>
+      </div>
       <button class="btn btn-primary w-100" type="submit">Crear cuenta</button>
     </div>
   </form>

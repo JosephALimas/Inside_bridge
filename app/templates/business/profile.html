@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Perfil de negocio | Inside Bridge{% endblock %}
+
+{% block content %}
+<div class="form-shell">
+  <h1 class="h3 mb-3">Perfil de negocio</h1>
+  <form method="post" class="card">
+    <div class="card-body">
+      <div class="mb-3">
+        <label class="form-label" for="business_name">Nombre comercial</label>
+        <input class="form-control" id="business_name" name="business_name" value="{{ business.business_name if business else '' }}" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="description">Descripcion</label>
+        <textarea class="form-control" id="description" name="description" rows="4" required>{{ business.description if business else '' }}</textarea>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label" for="city">Ciudad</label>
+          <input class="form-control" id="city" name="city" value="{{ business.city if business else 'Ciudad de Mexico' }}" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label" for="address_area">Zona o direccion</label>
+          <input class="form-control" id="address_area" name="address_area" value="{{ business.address_area if business else '' }}" required>
+        </div>
+      </div>
+      <div class="row g-3 mt-1">
+        <div class="col-md-4">
+          <label class="form-label" for="whatsapp">WhatsApp</label>
+          <input class="form-control" id="whatsapp" name="whatsapp" value="{{ business.whatsapp if business else '' }}">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label" for="contact_email">Email de contacto</label>
+          <input class="form-control" id="contact_email" name="contact_email" type="email" value="{{ business.contact_email if business else current_user.email }}">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label" for="website_url">Sitio web</label>
+          <input class="form-control" id="website_url" name="website_url" type="url" value="{{ business.website_url if business else '' }}">
+        </div>
+      </div>
+      <div class="d-flex justify-content-end gap-2 mt-4">
+        <a class="btn btn-outline-secondary" href="{{ url_for('business.dashboard') }}">Cancelar</a>
+        <button class="btn btn-primary" type="submit">Guardar perfil</button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

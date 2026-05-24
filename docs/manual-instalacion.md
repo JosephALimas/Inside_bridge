@@ -38,13 +38,21 @@ Abre `http://127.0.0.1:5000`.
 flask --app run.py create-admin
 ```
 
-## 6. Ejecutar pruebas
+## 6. Probar el flujo MVP
+
+1. Entra con la cuenta admin y abre `/admin/experiences`.
+2. Registra una cuenta nueva como `Negocio local`.
+3. Completa el perfil en `/business/profile`.
+4. Crea una experiencia en `/business/experiences/new`.
+5. Vuelve como admin, aprueba la experiencia y revisa `/experiences`.
+
+## 7. Ejecutar pruebas
 
 ```bash
 pytest
 ```
 
-## 7. Ejecutar con Docker
+## 8. Ejecutar con Docker
 
 ```bash
 docker compose up --build

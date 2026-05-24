@@ -31,6 +31,37 @@ body {
   max-width: 440px;
 }
 
+.form-shell {
+  max-width: 920px;
+}
+
 .card {
   border-radius: 8px;
+}
+
+.filter-bar,
+.empty-state {
+  background: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+}
+
+.experience-card {
+  overflow: hidden;
+}
+
+.experience-image {
+  height: 190px;
+  object-fit: cover;
+}
+
+.detail-image {
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.detail-panel {
+  top: 1rem;
 }

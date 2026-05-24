@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Experiencias | Inside Bridge{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-end mb-4">
+  <div>
+    <p class="text-primary fw-semibold mb-1">Catalogo curado</p>
+    <h1 class="h2 mb-1">Experiencias locales aprobadas</h1>
+    <p class="text-secondary mb-0">Planes autenticos en Ciudad de Mexico para visitantes y nuevos residentes.</p>
+  </div>
+</div>
+
+<form class="filter-bar row g-3 align-items-end mb-4" method="get">
+  <div class="col-md-4">
+    <label class="form-label" for="category">Categoria</label>
+    <select class="form-select" id="category" name="category">
+      <option value="">Todas</option>
+      {% for category in categories %}
+        <option value="{{ category }}" {% if selected_category == category %}selected{% endif %}>{{ category }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-3">
+    <label class="form-label" for="language">Idioma</label>
+    <select class="form-select" id="language" name="language">
+      <option value="">Cualquier idioma</option>
+      <option value="es" {% if selected_language == "es" %}selected{% endif %}>Espanol</option>
+      <option value="en" {% if selected_language == "en" %}selected{% endif %}>English</option>
+    </select>
+  </div>
+  <div class="col-md-3">
+    <label class="form-label" for="price_max">Precio maximo</label>
+    <input class="form-control" id="price_max" name="price_max" type="number" min="0" step="1" value="{{ price_max }}" placeholder="MXN">
+  </div>
+  <div class="col-md-2 d-grid">
+    <button class="btn btn-primary" type="submit">Filtrar</button>
+  </div>
+</form>
+
+{% if experiences %}
+  <div class="row g-4">
+    {% for experience in experiences %}
+      <div class="col-md-6 col-xl-4">
+        <article class="card experience-card h-100">
+          {% if experience.image_url %}
+            <img src="{{ experience.image_url }}" class="card-img-top experience-image" alt="{{ experience.title_es }}">
+          {% endif %}
+          <div class="card-body d-flex flex-column">
+            <div class="d-flex justify-content-between gap-2 mb-2">
+              <span class="badge text-bg-light">{{ experience.category }}</span>
+              <span class="text-secondary small">{{ experience.display_price }}</span>
+            </div>
+            <h2 class="h5">{{ experience.title_es }}</h2>
+            <p class="text-secondary">{{ experience.description_es[:130] }}{% if experience.description_es|length > 130 %}...{% endif %}</p>
+            <div class="mt-auto">
+              <p class="small text-secondary mb-2">{{ experience.business.business_name }} · {{ experience.address_area }}</p>
+              <a class="btn btn-outline-primary w-100" href="{{ url_for('experiences.detail', experience_id=experience.id) }}">Ver detalle</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="empty-state p-5 text-center">
+    <h2 class="h5">Aun no hay experiencias aprobadas</h2>
+    <p class="text-secondary mb-0">Pronto apareceran opciones curadas por negocios locales.</p>
+  </div>
+{% endif %}
+{% endblock %}

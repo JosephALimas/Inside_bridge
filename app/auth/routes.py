@@ -6,15 +6,27 @@ from app.extensions import db
 from app.models import Role, User
 
 
+def redirect_for_user(user):
+    if user.is_admin:
+        return redirect(url_for("admin.experiences"))
+    if user.is_business:
+        return redirect(url_for("business.dashboard"))
+    return redirect(url_for("experiences.index"))
+
+
 @auth_bp.route("/register", methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for("main.dashboard"))
+        return redirect_for_user(current_user)
 
     if request.method == "POST":
         name = request.form.get("name", "").strip()
         email = request.form.get("email", "").strip().lower()
         password = request.form.get("password", "")
+        role_name = request.form.get("role", "tourist")
+
+        if role_name not in {"tourist", "business"}:
+            role_name = "tourist"
 
         if not name or not email or not password:
             flash("Todos los campos son obligatorios.", "danger")
@@ -25,7 +37,7 @@ def register():
             return render_template("auth/register.html"), 409
 
         Role.seed_defaults()
-        role = Role.query.filter_by(name="member").first()
+        role = Role.query.filter_by(name=role_name).first()
         user = User(name=name, email=email, role=role)
         user.set_password(password)
 
@@ -33,7 +45,7 @@ def register():
         db.session.commit()
         login_user(user)
         flash("Cuenta creada correctamente.", "success")
-        return redirect(url_for("main.dashboard"))
+        return redirect_for_user(user)
 
     return render_template("auth/register.html")
 
@@ -41,7 +53,7 @@ def register():
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for("main.dashboard"))
+        return redirect_for_user(current_user)
 
     if request.method == "POST":
         email = request.form.get("email", "").strip().lower()
@@ -56,7 +68,7 @@ def login():
         login_user(user, remember=remember)
         flash("Bienvenido de vuelta.", "success")
         next_url = request.args.get("next")
-        return redirect(next_url or url_for("main.dashboard"))
+        return redirect(next_url or redirect_for_user(user).location)
 
     return render_template("auth/login.html")
 
