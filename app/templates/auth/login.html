@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Entrar | Inside Bridge{% endblock %}
+
+{% block content %}
+<div class="auth-shell mx-auto">
+  <h1 class="h3 mb-3">Entrar</h1>
+  <form method="post" class="card">
+    <div class="card-body">
+      <div class="mb-3">
+        <label for="email" class="form-label">Correo</label>
+        <input class="form-control" id="email" name="email" type="email" autocomplete="email" required>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Contrasena</label>
+        <input class="form-control" id="password" name="password" type="password" autocomplete="current-password" required>
+      </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" id="remember" name="remember" type="checkbox">
+        <label class="form-check-label" for="remember">Recordarme</label>
+      </div>
+      <button class="btn btn-primary w-100" type="submit">Entrar</button>
+    </div>
+  </form>
+  <p class="text-secondary mt-3 mb-0">No tienes cuenta? <a href="{{ url_for('auth.register') }}">Registrate</a></p>
+</div>
+{% endblock %}

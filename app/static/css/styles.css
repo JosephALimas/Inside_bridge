@@ -1,0 +1,36 @@
+:root {
+  color-scheme: light;
+}
+
+body {
+  min-height: 100vh;
+  background: #f7f8fb;
+}
+
+.navbar {
+  background: #ffffff;
+}
+
+.feature-panel {
+  background: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  box-shadow: 0 12px 30px rgba(20, 35, 70, 0.08);
+}
+
+.feature-panel li {
+  padding: 0.55rem 0;
+  border-top: 1px solid #edf0f4;
+}
+
+.feature-panel li:first-child {
+  border-top: 0;
+}
+
+.auth-shell {
+  max-width: 440px;
+}
+
+.card {
+  border-radius: 8px;
+}
